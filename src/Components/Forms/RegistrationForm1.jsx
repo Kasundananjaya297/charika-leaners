@@ -67,7 +67,7 @@ export default function RegistrationForm1() {
         save();
 
         // Reset the form after successful submission
-        //resetForm();
+        resetForm();
       } catch (errors) {
         formik.setErrors(errors);
       } finally {
@@ -84,10 +84,7 @@ export default function RegistrationForm1() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await SaveStudent(
-            formik.values,
-            sessionStorage.getItem("token")
-          );
+          const response = await SaveStudent(formik.values); // call api.saveStudent
           console.log(response);
           // Check the response and handle it accordingly
           if (response.data.code === "00") {

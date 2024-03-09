@@ -1,21 +1,26 @@
-import axios from "axios";
+import AxiosInstance from "./AxiosInstance";
 
-const LOGIN_LINK_URL = "http://127.0.0.1:8080/api/authentication/ValidateUser";
-const SAVE_STUDENT_URL = "http://127.0.0.1:8080/api/admin/registerStudent";
+/* old method I tried */
 
-const generateHeaders = (token) => {
-  return {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-};
+// const generateHeaders = (token) => {
+//   return {
+//     headers: {
+//       Authorization: "Bearer " + token,
+//     },
+//   };
+// };
 
 export const ValidateUser = (userData) => {
-  return axios.post(LOGIN_LINK_URL, userData);
+  return AxiosInstance.post("authentication/ValidateUser", userData);
 };
 
-export const SaveStudent = (stdData, token) => {
-  const headers = generateHeaders(token);
-  return axios.post(SAVE_STUDENT_URL, stdData, headers);
+export const SaveStudent = (stdData) => {
+  // const headers = generateHeaders(token);
+  return AxiosInstance.post("admin/registerStudent", stdData);
+};
+export const FetchAllStudnet = (field, order, pageSize, offset) => {
+  // const headers = generateHeaders(token);
+  return AxiosInstance.get(
+    `admin/getStudent/${field}/${order}/${pageSize}/${offset}`
+  );
 };

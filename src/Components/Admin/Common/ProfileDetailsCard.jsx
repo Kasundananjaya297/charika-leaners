@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
+import { Link } from "react-router-dom";
 export default function ProfileDetailsCard() {
   return (
     <div>
@@ -30,6 +31,24 @@ export default function ProfileDetailsCard() {
                 </Col>
               </Row>
               <Row className="mb-2">
+                <Col xs={4}>Medical:</Col>
+                <Col xs={8} className="pl-4 font-bold">
+                  <Link to={""}>View</Link>
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col xs={4}>Trail:</Col>
+                <Col xs={8} className="pl-4 font-bold">
+                  <Link to={""}>View</Link>
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col xs={4}>Address:</Col>
+                <Col xs={8} className="pl-4">
+                  325 A/2 Boralugoda, Athurugiriya
+                </Col>
+              </Row>
+              <Row className="mb-2">
                 <Col xs={4}>Contact:</Col>
                 <Col xs={8} className="pl-4">
                   0758462129
@@ -53,6 +72,24 @@ export default function ProfileDetailsCard() {
                   18
                 </Col>
               </Row>
+              <Row className="mb-2">
+                <Col xs={4}>Guardian's N:</Col>
+                <Col xs={8} className="pl-4">
+                  Malkanthi
+                </Col>
+              </Row>
+              <Row className="mb-2 flex items-center justify-center">
+                <Col xs={4}>Guardian's C:</Col>
+                <Col xs={8} className="pl-4">
+                  0758462129
+                </Col>
+              </Row>
+              <Row className="mb-2 flex items-center justify-center">
+                <Col xs={4}>Registered on:</Col>
+                <Col xs={8} className="pl-4">
+                  03/03/2024
+                </Col>
+              </Row>
               <Row className="mb-2 items-center">
                 <Col xs={4}>Account State:</Col>
                 <Col xs={6} className="pl-4">
@@ -65,6 +102,12 @@ export default function ProfileDetailsCard() {
                 <Col xs={4}>Package:</Col>
                 <Col xs={8} className="pl-4 font-bold">
                   Drive Ease
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col xs={4}>Payments:</Col>
+                <Col xs={8} className="pl-4 font-bold">
+                  <Link to={""}>View</Link>
                 </Col>
               </Row>
               <Row className="mb-2">
