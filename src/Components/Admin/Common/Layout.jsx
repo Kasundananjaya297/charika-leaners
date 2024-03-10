@@ -7,7 +7,8 @@ export default function Layout() {
   const isVisible = !(
     location.pathname.includes("/Form1") ||
     location.pathname.includes("/Form2") ||
-    location.pathname.includes("/Login")
+    location.pathname.includes("/Login") ||
+    location.pathname.includes("/trail")
   );
 
   return (

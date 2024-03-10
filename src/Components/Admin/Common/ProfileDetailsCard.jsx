@@ -3,8 +3,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import TrailPermit from "../../Forms/TrailPermit";
 export default function ProfileDetailsCard({ studentData }) {
+  const [stdID, setStudentID] = useState();
+  const nav = useNavigate();
+  const AddTrial = () => {
+    nav("/studentprofile/trail");
+  };
   return (
     <div>
       <Row className="flex overflow-hidden text-sm item-center">
@@ -36,7 +43,6 @@ export default function ProfileDetailsCard({ studentData }) {
                   <Button
                     className="flex w-18 h-8 justify-center items-center ml-10"
                     variant="outline-success"
-                    onClick={""}
                     style={{ fontSize: "small" }}
                   >
                     Add
@@ -50,7 +56,7 @@ export default function ProfileDetailsCard({ studentData }) {
                   <Button
                     className="flex w-18 h-8 justify-center items-center ml-10"
                     variant="outline-success"
-                    onClick={""}
+                    onClick={AddTrial}
                     style={{ fontSize: "small" }}
                   >
                     Add

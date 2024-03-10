@@ -4,6 +4,7 @@ import Home from "./Components/Admin/Home";
 import StudentProfile from "./Components/Admin/StudentProfile";
 import RegistrationForm1 from "./Components/Forms/RegistrationForm1";
 import Login from "./Components/Login/Login";
+import TrailPermit from "./Components/Forms/TrailPermit";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/Home" element={<Home />}></Route>
           <Route path="/studentprofile" element={<StudentProfile />} />
           <Route path="/studentprofile/Form1" element={<RegistrationForm1 />} />
+          <Route path="/studentprofile/trail" element={<TrailPermit />} />
           {/*
           <Route path="/Form2" element={<Form2 />} /> */}
         </Route>
