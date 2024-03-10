@@ -24,3 +24,9 @@ export const FetchAllStudnet = (field, order, pageSize, offset) => {
     `admin/getStudent/${field}/${order}/${pageSize}/${offset}`
   );
 };
+export const findStudentByAnyfield = (detail) => {
+  return AxiosInstance.get(`admin/getStudentBasic/${detail}`);
+};
+export const findStudentByID = (stdID) => {
+  return AxiosInstance.get(`admin/getStudentByID/${stdID}`);
+};

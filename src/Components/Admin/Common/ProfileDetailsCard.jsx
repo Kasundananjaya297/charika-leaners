@@ -130,33 +130,25 @@ export default function ProfileDetailsCard({ studentData }) {
                   </Button>
                 </Col>
               </Row>
-              <Row className="flex flex-row items-center justify-center">
+              <Row className="mb-2">
                 <Col xs={4}>Package:</Col>
                 <Col xs={8} className="pl-4 font-bold">
                   {studentData?.pak}
                 </Col>
               </Row>
-              <Row className="flex flex-row items-center justify-center">
+              <Row className="mb-2">
                 <Col xs={4}>Payments:</Col>
                 <Col xs={8} className="pl-4 font-bold">
                   <Link to={""}>View</Link>
-                  <Button
-                    className="flex w-18 h-8 justify-center items-center ml-10"
-                    variant="outline-success"
-                    onClick={""}
-                    style={{ fontSize: "small" }}
-                  >
-                    Add
-                  </Button>
                 </Col>
               </Row>
-              <Row className="flex flex-row items-center justify-center">
+              <Row className="mb-2">
                 <Col xs={4}>Full-Payment:</Col>
                 <Col xs={8} className="pl-4">
                   {studentData?.fullPayment}
                 </Col>
               </Row>
-              <Row className="flex flex-row items-center justify-center">
+              <Row className="mb-2">
                 <Col xs={4}>Remain:</Col>
                 <Col xs={8} className="pl-4 font-bold">
                   {studentData?.balance}

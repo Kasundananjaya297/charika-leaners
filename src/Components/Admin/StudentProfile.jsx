@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import RegisterNavBar from "../Admin/Common/RegisterNavBar";
 import ProfileDetailsCard from "./Common/ProfileDetailsCard";
 import Dropdown from "react-bootstrap/Dropdown";
-import { FetchAllStudnet } from "../ApiService/api";
+import { FetchAllStudnet, findStudentByID } from "../ApiService/api";
 
 export default function StudentProfile() {
   const [itemsPerPage, setItemsPerPage] = useState(10); // Default value
@@ -10,6 +10,7 @@ export default function StudentProfile() {
   const [feildName, setFeild] = useState("stdID");
   const [order, setOrder] = useState("ASC");
   const [offset, setOffset] = useState(0);
+  const [stdID, setStdID] = useState("");
 
   useEffect(() => {
     const onFetch = async () => {
@@ -32,10 +33,24 @@ export default function StudentProfile() {
         console.error("An error occurred:", error);
       }
     };
-
-    // Include any dependencies used inside onFetch in the dependency array
     onFetch();
   }, [feildName, order, itemsPerPage, offset]); //dependency array
+
+  useEffect(() => {
+    const fetchStdData = async () => {
+      try {
+        if (stdID !== null && stdID !== undefined && stdID !== "") {
+          const response = await findStudentByID(stdID);
+          console.log(stdID);
+          console.log(response?.data?.content);
+          setStudent([response?.data?.content]);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchStdData();
+  }, [stdID]);
 
   const handleItemsPerPageChange = (selectedItemsPerPage) => {
     setItemsPerPage(selectedItemsPerPage);
@@ -44,7 +59,11 @@ export default function StudentProfile() {
   return (
     <div className="flex flex-col h-dvh mb-2">
       <div className="bg-neutral-50">
-        <RegisterNavBar setfiled={setFeild} setOrder={setOrder} />
+        <RegisterNavBar
+          setfiled={setFeild}
+          setOrder={setOrder}
+          setStudentID={setStdID}
+        />
       </div>
       <div className="flex flex-col overflow-y-scroll h-full">
         <div className="flex flex-wrap">
