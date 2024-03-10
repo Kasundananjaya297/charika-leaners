@@ -149,7 +149,7 @@ export default function RegistrationForm1() {
                     {formik.touched.fname && formik.errors.fname}
                   </Form.Text>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Last Name<span className="text-red-500"> *</span>
                   </Form.Label>
@@ -165,7 +165,7 @@ export default function RegistrationForm1() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Email<span className="text-red-500"> *</span>
                   </Form.Label>
@@ -179,7 +179,7 @@ export default function RegistrationForm1() {
                     {formik.touched.email && formik.errors.email}
                   </Form.Text>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Telephone<span className="text-red-500"> *</span>
                   </Form.Label>
@@ -195,7 +195,7 @@ export default function RegistrationForm1() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     NIC<span className="text-red-500"> *</span>
                   </Form.Label>
@@ -209,7 +209,7 @@ export default function RegistrationForm1() {
                     {formik.touched.nic && formik.errors.nic}
                   </Form.Text>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Date Of Birth<span className="text-red-500"> *</span>
                   </Form.Label>
@@ -227,7 +227,7 @@ export default function RegistrationForm1() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Gender<span className="text-red-500"> *</span>
                   </Form.Label>
@@ -251,7 +251,7 @@ export default function RegistrationForm1() {
                     {formik.touched.isMale && formik.errors.isMale}
                   </Form.Text>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Registered On<span className="text-red-500"> *</span>
                   </Form.Label>
@@ -266,7 +266,7 @@ export default function RegistrationForm1() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>Address No</Form.Label>
                   <Form.Control
                     type="text"
@@ -277,7 +277,7 @@ export default function RegistrationForm1() {
                     {formik.touched.addressNo && formik.errors.addressNo}
                   </Form.Text>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Address Line 1
                     <span className="text-red-500" required>
@@ -296,7 +296,7 @@ export default function RegistrationForm1() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>Address Line 2</Form.Label>
                   <Form.Control
                     type="text"
@@ -307,7 +307,7 @@ export default function RegistrationForm1() {
                     {formik.touched.adl2 && formik.errors.adl2}
                   </Form.Text>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     City
                     <span className="text-red-500"> *</span>
@@ -324,7 +324,7 @@ export default function RegistrationForm1() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Guardian Name
                     <span className="text-red-500"> *</span>
@@ -339,7 +339,7 @@ export default function RegistrationForm1() {
                     {formik.touched.guardianName && formik.errors.guardianName}
                   </Form.Text>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6}>
                   <Form.Label>
                     Guardian Tel<span className="text-red-500"> *</span>
                   </Form.Label>
