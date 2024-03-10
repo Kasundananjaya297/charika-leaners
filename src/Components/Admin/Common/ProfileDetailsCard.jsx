@@ -1,11 +1,10 @@
-import React from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
-export default function ProfileDetailsCard() {
+export default function ProfileDetailsCard({ studentData }) {
   return (
     <div>
       <Row className="flex overflow-hidden text-sm item-center">
@@ -21,105 +20,146 @@ export default function ProfileDetailsCard() {
               <Row className="mb-2">
                 <Col xs={4}>Contract No:</Col>
                 <Col xs={8} className="pl-4">
-                  CN-5001
+                  {studentData?.stdID}
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Name:</Col>
                 <Col xs={8} className="pl-4">
-                  Kasun Dhananjaya
+                  {studentData?.fname} {studentData?.lname}
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Medical:</Col>
                 <Col xs={8} className="pl-4 font-bold">
                   <Link to={""}>View</Link>
+                  <Button
+                    className="flex w-18 h-8 justify-center items-center ml-10"
+                    variant="outline-success"
+                    onClick={""}
+                    style={{ fontSize: "small" }}
+                  >
+                    Add
+                  </Button>
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Trail:</Col>
                 <Col xs={8} className="pl-4 font-bold">
                   <Link to={""}>View</Link>
+                  <Button
+                    className="flex w-18 h-8 justify-center items-center ml-10"
+                    variant="outline-success"
+                    onClick={""}
+                    style={{ fontSize: "small" }}
+                  >
+                    Add
+                  </Button>
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Address:</Col>
                 <Col xs={8} className="pl-4">
-                  325 A/2 Boralugoda, Athurugiriya
+                  {studentData?.addressNo} {studentData?.adl1},{" "}
+                  {studentData?.adl2}
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col xs={4}>City:</Col>
+                <Col xs={8} className="pl-4">
+                  {studentData?.city}
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Contact:</Col>
                 <Col xs={8} className="pl-4">
-                  0758462129
+                  {studentData?.telephone}
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Email:</Col>
                 <Col xs={8} className="pl-4">
-                  Kasun.dananjaya297@gmail.com
+                  {studentData?.email}
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>NIC:</Col>
                 <Col xs={8} className="pl-4">
-                  200117202070
+                  {studentData?.nic}
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Age:</Col>
                 <Col xs={8} className="pl-4">
-                  18
+                  {studentData?.age}
                 </Col>
               </Row>
               <Row className="mb-2">
                 <Col xs={4}>Guardian's N:</Col>
                 <Col xs={8} className="pl-4">
-                  Malkanthi
+                  {studentData?.guardianName}
                 </Col>
               </Row>
               <Row className="mb-2 flex items-center justify-center">
                 <Col xs={4}>Guardian's C:</Col>
                 <Col xs={8} className="pl-4">
-                  0758462129
+                  {studentData?.guardianTelephone}
                 </Col>
               </Row>
               <Row className="mb-2 flex items-center justify-center">
                 <Col xs={4}>Registered on:</Col>
                 <Col xs={8} className="pl-4">
-                  03/03/2024
+                  {studentData?.registered}
                 </Col>
               </Row>
               <Row className="mb-2 items-center">
                 <Col xs={4}>Account State:</Col>
                 <Col xs={6} className="pl-4">
-                  <Button size="sm" variant="danger" disabled>
-                    Not-Activated
+                  <Button
+                    size="sm"
+                    variant={
+                      studentData?.registrationStatus === false
+                        ? "danger"
+                        : "success"
+                    }
+                    disabled
+                  >
+                    {studentData.registrationStatus === false
+                      ? "Not-Activated"
+                      : "Activated"}
                   </Button>
                 </Col>
               </Row>
-              <Row className="mb-2">
+              <Row className="flex flex-row items-center justify-center">
                 <Col xs={4}>Package:</Col>
                 <Col xs={8} className="pl-4 font-bold">
-                  Drive Ease
+                  {studentData?.pak}
                 </Col>
               </Row>
-              <Row className="mb-2">
+              <Row className="flex flex-row items-center justify-center">
                 <Col xs={4}>Payments:</Col>
                 <Col xs={8} className="pl-4 font-bold">
                   <Link to={""}>View</Link>
+                  <Button
+                    className="flex w-18 h-8 justify-center items-center ml-10"
+                    variant="outline-success"
+                    onClick={""}
+                    style={{ fontSize: "small" }}
+                  >
+                    Add
+                  </Button>
                 </Col>
               </Row>
-              <Row className="mb-2">
+              <Row className="flex flex-row items-center justify-center">
                 <Col xs={4}>Full-Payment:</Col>
                 <Col xs={8} className="pl-4">
-                  Rs. 28000
+                  {studentData?.fullPayment}
                 </Col>
               </Row>
-              <Row className="mb-2">
+              <Row className="flex flex-row items-center justify-center">
                 <Col xs={4}>Remain:</Col>
                 <Col xs={8} className="pl-4 font-bold">
-                  Rs. 28000
+                  {studentData?.balance}
                 </Col>
               </Row>
             </Card.Body>
@@ -129,3 +169,22 @@ export default function ProfileDetailsCard() {
     </div>
   );
 }
+// addressNo: "325A2";
+// adl1: "Boralugoda";
+// adl2: "Athurugiriya";
+// age: 0;
+// balance: null;
+// city: "Colombo";
+// email: "Kasun.dananjaya297@gmail.com";
+// fname: "Kasun";
+// fullPayment: null;
+// guardianName: "R.A.S";
+// guardianTelephone: 771701288;
+// isMale: true;
+// lname: "Dhananjaya";
+// nic: "2001172021";
+// pack: null;
+// registered: "2020-12-13";
+// registrationStatus: false;
+// stdID: "CN-5001";
+// telephone: 771701289;

@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
-export default function RegisterNavBar() {
+export default function RegisterNavBar({ setfiled, setOrder }) {
+  //props for set nav bar selections
   const nav = useNavigate();
   const GoToRegisterForm1 = () => {
     nav("/studentprofile/Form1");
   };
-  const [dropDownTitle, setDropDownTitle] = useState("All");
+
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -23,12 +24,20 @@ export default function RegisterNavBar() {
               className="flex"
               id="dropdown-basic-button"
               onSelect={(eventKey, event) => {
-                setDropDownTitle(eventKey);
+                if (eventKey === "stdID_ASC" || eventKey === "stdID_DESC") {
+                  // Extract the order (ASC/DESC) from the eventKey
+                  const order = eventKey.split("_")[1];
+                  setfiled("stdID");
+                  setOrder(order);
+                } else {
+                  setfiled(eventKey);
+                  setOrder(null); // Assuming there is no specific order for other options
+                }
               }}
-              title={dropDownTitle}
+              title="Filter"
             >
-              <Dropdown.Item eventKey="All">All</Dropdown.Item>
-              <Dropdown.Item eventKey="Payments">Payments</Dropdown.Item>
+              <Dropdown.Item eventKey="stdID_ASC">A-Z</Dropdown.Item>
+              <Dropdown.Item eventKey="stdID_DESC">Z-A</Dropdown.Item>
               <Dropdown.Item eventKey="Registered">Registered</Dropdown.Item>
             </DropdownButton>
             <Form.Control
