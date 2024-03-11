@@ -30,3 +30,6 @@ export const findStudentByAnyfield = (detail) => {
 export const findStudentByID = (stdID) => {
   return AxiosInstance.get(`admin/getStudentByID/${stdID}`);
 };
+export const saveTrailPermit = (permitData) => {
+  return AxiosInstance.post("admin/SaveTrialPermit", permitData);
+};

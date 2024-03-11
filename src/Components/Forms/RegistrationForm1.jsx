@@ -65,7 +65,6 @@ export default function RegistrationForm1() {
 
       try {
         save();
-
         // Reset the form after successful submission
         resetForm();
       } catch (errors) {
@@ -120,7 +119,7 @@ export default function RegistrationForm1() {
     }
   }, [nav]);
   return (
-    <div className="flex flex-1 justify-center items-center w-screen mt-4">
+    <div className="flex flex-1 justify-center items-center w-screen mt-4 h-screen">
       <Card style={{ width: "40em" }}>
         <Card.Body>
           <div className="p-4">

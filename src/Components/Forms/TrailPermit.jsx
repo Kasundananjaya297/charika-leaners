@@ -3,23 +3,99 @@ import { Card, Form, Row, Col, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { findStudentByID } from "../ApiService/api";
+import { findStudentByID, saveTrailPermit } from "../ApiService/api";
+import Swal from "sweetalert2";
 
 export default function TrailPermit() {
   const location = useLocation();
   const stdId = location.state;
-  const [b1M, setB1M] = useState(false);
-  const [bA, setBA] = useState(false);
-  const [bM, setBM] = useState(false);
-  const [a1A, setA1A] = useState(false);
-  const [a1M, setA1M] = useState(false);
-  const [aA, setAA] = useState(false);
   const [studentData, setStudentData] = useState("");
+  const [submitButton, setSubmitButton] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const formik = useFormik({
-    initialValues: { fname: "", lname: "" },
-    validationSchema: Yup.object({}),
+    initialValues: {
+      stdID: stdId,
+      examDate: "",
+      serialNo: "",
+      expDate: "",
+      b1M: true,
+      bM: false,
+      bA: false,
+      a1M: false,
+      a1A: false,
+      aM: false,
+    },
+    validationSchema: Yup.object({
+      examDate: Yup.date().required("Exam date is required"),
+      serialNo: Yup.number("Serial number is Number").required(
+        "Serial number is required"
+      ),
+      expDate: Yup.date().required("Exam date is required"),
+    }),
+    onSubmit: async (e, { setSubmitting, resetForm }) => {
+      setSubmitting(true);
+      formik.setValues({ ...formik.values });
+      console.log(formik.values);
+      try {
+        save(formik.values);
+        resetForm();
+      } catch (errors) {
+        formik.setErrors(errors);
+      } finally {
+        setSubmitting(false);
+      }
+    },
   });
+
+  const save = (trailPermitDetails) => {
+    Swal.fire({
+      icon: "warning",
+      title: "Are you sure?",
+      text: "Going to save details",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await saveTrailPermit(trailPermitDetails); // call api.saveStudent
+          console.log(response);
+          // Check the response and handle it accordingly
+          if (response.data.code === "00") {
+            Swal.fire({
+              icon: "success",
+              title: "Saved Successfully",
+            });
+          } else if (response.data.code === "06") {
+            Swal.fire({
+              icon: "error",
+              title: "Already Entered This Permit",
+            });
+          }
+        } catch (error) {
+          console.error("Error while saving student details:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Internal error occurred while saving trail permit details",
+          });
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    const atLeastOneSelected = () => {
+      const { b1M, bM, bA, a1M, a1A, aM } = formik.values;
+      if ((b1M || bM || bA || a1M || a1A || aM) !== true) {
+        setSubmitButton(true);
+        setErrorMsg("At least one need to be selected");
+      } else {
+        setSubmitButton(false);
+        setErrorMsg("");
+      }
+    };
+    atLeastOneSelected();
+  }, [formik.values]);
+
   const nav = useNavigate();
   useEffect(() => {
     let role = sessionStorage.getItem("role");
@@ -29,11 +105,8 @@ export default function TrailPermit() {
     } else if (stdId === null) {
       nav("/studentprofile");
     }
-  });
-  useEffect(() => {
-    console.log("bike Auto" + a1A);
-    console.log("bike Manual" + a1M);
-  }, [b1M, bA, bM, a1A, a1M, aA]);
+  }, [nav]);
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -50,7 +123,7 @@ export default function TrailPermit() {
     nav("/studentprofile");
   };
   return (
-    <div className="flex flex-1 justify-center items-center w-screen mt-16">
+    <div className="flex flex-1 justify-center  mt-10 w-screen items-center">
       <Card style={{ width: "40em" }}>
         <Card.Body>
           <div className="p-4">
@@ -81,7 +154,7 @@ export default function TrailPermit() {
                 </tr>
               </table>
             </div>
-            <Form>
+            <Form onSubmit={formik.handleSubmit}>
               <Row className="">
                 <Form.Group as={Col} md={6}>
                   <Form.Label>
@@ -90,11 +163,11 @@ export default function TrailPermit() {
                   <Form.Control
                     type="Number"
                     placeholder=""
-                    {...formik.getFieldProps("email")}
+                    {...formik.getFieldProps("serialNo")}
                     required
                   />
                   <Form.Text className="text-danger">
-                    {formik.touched.email && formik.errors.email}
+                    {formik.touched.serialNo && formik.errors.serialNo}
                   </Form.Text>
                 </Form.Group>
                 <Form.Group as={Col} md={6}>
@@ -103,9 +176,12 @@ export default function TrailPermit() {
                   </Form.Label>
                   <Form.Control
                     type="Date"
-                    {...formik.getFieldProps("telephone")}
+                    {...formik.getFieldProps("examDate")}
                     required
                   />
+                  <Form.Text className="text-danger">
+                    {formik.touched.examDate && formik.errors.examDate}
+                  </Form.Text>
                 </Form.Group>
               </Row>
 
@@ -114,11 +190,24 @@ export default function TrailPermit() {
                   <Form.Label>
                     Exp Date:<span className="text-red-500"> *</span>
                   </Form.Label>
-                  <Form.Control type="date" placeholder="" required />
+                  <Form.Control
+                    type="date"
+                    placeholder=""
+                    required
+                    {...formik.getFieldProps("expDate")}
+                    onSelect={() => {
+                      formik.setFieldValue("b1M", false);
+                    }}
+                  />
+                  <Form.Text className="text-danger">
+                    {formik.touched.expDate && formik.errors.expDate}
+                  </Form.Text>
                 </Form.Group>
               </Row>
 
-              <div className="mb-0 mt-3">Details Of leaner permit</div>
+              <div className="mb-0 mt-3">
+                Details Of leaner permit<span className="text-red-500"> *</span>
+              </div>
               <div className="flex flex-col items-center  pr-4">
                 <table className="border-collapse w-full mt-2">
                   <thead>
@@ -137,22 +226,25 @@ export default function TrailPermit() {
                         <label>B1 - Motor Tricycle</label>
                       </td>
                       <td className="border p-2">
+                        <input
+                          type="radio"
+                          name="b1"
+                          onChange={() => {
+                            formik.setFieldValue("b1M", true);
+                          }}
+                        />
+                      </td>
+                      <td className="border p-2">
                         <input type="radio" name="b1" disabled={true} />
                       </td>
                       <td className="border p-2">
                         <input
                           type="radio"
                           name="b1"
-                          onChange={(e) => setB1M(e.target.checked)}
-                          checked={b1M}
-                        />
-                      </td>
-                      <td className="border p-2">
-                        <input
-                          type="radio"
-                          name="b1"
                           defaultChecked={true}
-                          onChange={() => setB1M(false)}
+                          onChange={() => {
+                            formik.setFieldValue("b1M", false);
+                          }}
                         />
                       </td>
                     </tr>
@@ -165,8 +257,8 @@ export default function TrailPermit() {
                           type="radio"
                           name="b"
                           onChange={() => {
-                            setBM(true);
-                            setBA(false);
+                            formik.setFieldValue("bM", true);
+                            formik.setFieldValue("bA", false);
                           }}
                         />
                       </td>
@@ -175,8 +267,8 @@ export default function TrailPermit() {
                           type="radio"
                           name="b"
                           onChange={() => {
-                            setBM(false);
-                            setBA(true);
+                            formik.setFieldValue("bM", false);
+                            formik.setFieldValue("bA", true);
                           }}
                         />
                       </td>
@@ -186,8 +278,8 @@ export default function TrailPermit() {
                           name="b"
                           defaultChecked={true}
                           onChange={() => {
-                            setBM(false);
-                            setBA(false);
+                            formik.setFieldValue("bA", false);
+                            formik.setFieldValue("bM", false);
                           }}
                         />
                       </td>
@@ -201,8 +293,8 @@ export default function TrailPermit() {
                           type="radio"
                           name="A1"
                           onChange={() => {
-                            setA1M(true);
-                            setA1A(false);
+                            formik.setFieldValue("a1M", true);
+                            formik.setFieldValue("a1A", false);
                           }}
                         />
                       </td>
@@ -211,8 +303,8 @@ export default function TrailPermit() {
                           type="radio"
                           name="A1"
                           onChange={() => {
-                            setA1M(false);
-                            setA1A(true);
+                            formik.setFieldValue("a1M", false);
+                            formik.setFieldValue("a1A", true);
                           }}
                         />
                       </td>
@@ -222,8 +314,8 @@ export default function TrailPermit() {
                           name="A1"
                           defaultChecked={true}
                           onChange={() => {
-                            setA1M(false);
-                            setA1A(false);
+                            formik.setFieldValue("a1M", false);
+                            formik.setFieldValue("a1A", false);
                           }}
                         />
                       </td>
@@ -233,16 +325,16 @@ export default function TrailPermit() {
                         <label>A - Mortorcycle Engine Capacity &ge; 100</label>
                       </td>
                       <td className="border p-2">
-                        <input type="radio" name="A" disabled={true} />
-                      </td>
-                      <td className="border p-2">
                         <input
                           type="radio"
                           name="A"
                           onChange={() => {
-                            setAA(true);
+                            formik.setFieldValue("aM", true);
                           }}
                         />
+                      </td>
+                      <td className="border p-2">
+                        <input type="radio" name="A" disabled={true} />
                       </td>
                       <td className="border p-2">
                         <input
@@ -250,13 +342,16 @@ export default function TrailPermit() {
                           name="A"
                           defaultChecked={true}
                           onChange={() => {
-                            setAA(false);
+                            formik.setFieldValue("aM", false);
                           }}
                         />
                       </td>
                     </tr>
                   </tbody>
                 </table>
+                <Form.Text className="text-danger items-start flex justify-start text-left flex-row w-full">
+                  {errorMsg}
+                </Form.Text>
               </div>
 
               <Row>
@@ -264,7 +359,11 @@ export default function TrailPermit() {
                   <Button variant="danger" onClick={back}>
                     Back
                   </Button>
-                  <Button type="submit" variant="success">
+                  <Button
+                    type="submit"
+                    variant="success"
+                    disabled={submitButton}
+                  >
                     Save
                   </Button>
                 </div>
