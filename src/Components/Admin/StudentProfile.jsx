@@ -8,7 +8,7 @@ export default function StudentProfile() {
   const [itemsPerPage, setItemsPerPage] = useState(10); // Default value
   const [studentDetails, setStudent] = useState([]);
   const [feildName, setFeild] = useState("stdID");
-  const [order, setOrder] = useState("ASC");
+  const [order, setOrder] = useState("DESC");
   const [offset, setOffset] = useState(0);
   const [stdID, setStdID] = useState("");
 

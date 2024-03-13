@@ -21,7 +21,11 @@ const viewTrail = (stdID) =>{
   if (stdID !== null && stdID !== undefined && stdID !== "") {
   nav("/studentprofile/trailView", { state: stdID });
 }}
-
+  const AddMedical = (stdID) => {
+  if (stdID !== null && stdID !== undefined && stdID !== "") {
+        nav("/studentprofile/medical", { state: stdID });
+        }
+  }
 
   return (
     <div>
@@ -54,6 +58,7 @@ const viewTrail = (stdID) =>{
                       className="flex w-18 h-8 justify-center items-center"
                       variant="outline-success"
                       style={{ fontSize: "small" }}
+                      onClick={()=>{AddMedical(studentData?.stdID)}}
                   >
                     Add
                   </Button>
@@ -114,6 +119,12 @@ const viewTrail = (stdID) =>{
                 <Col xs={4}>Age:</Col>
                 <Col xs={8} className="pl-4">
                   {studentData?.age}
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col xs={4}>Gender:</Col>
+                <Col xs={8} className="pl-4">
+                  {(studentData?.isMale?"Male":"Female")}
                 </Col>
               </Row>
               <Row className="mb-2">

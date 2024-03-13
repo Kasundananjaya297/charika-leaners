@@ -9,7 +9,8 @@ export default function Layout() {
     location.pathname.includes("/Form2") ||
     location.pathname.includes("/Login") ||
     location.pathname.includes("/trail")||
-    location.pathname.includes("/trailView")
+    location.pathname.includes("/trailView")||
+    location.pathname.includes("/medical")
   );
 
   return (
