@@ -4,19 +4,25 @@ import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useState} from "react";
 export default function ProfileDetailsCard({ studentData }) {
-  const [stdID, setStudentID] = useState("");
+  const [stdData,setStudentData]= useState();
+  const [trailData,setTrialData] = useState();
 
   const nav = useNavigate();
-  const AddTrial = () => {
+
+
+  const AddTrial = (stdID) => {
     if (stdID !== null && stdID !== undefined && stdID !== "") {
       nav("/studentprofile/trail", { state: stdID });
     }
   };
-  useEffect(() => {
-    AddTrial();
-  });
+const viewTrail = (stdID) =>{
+  if (stdID !== null && stdID !== undefined && stdID !== "") {
+  nav("/studentprofile/trailView", { state: stdID });
+}}
+
+
   return (
     <div>
       <Row className="flex overflow-hidden text-sm item-center">
@@ -41,34 +47,36 @@ export default function ProfileDetailsCard({ studentData }) {
                   {studentData?.fname} {studentData?.lname}
                 </Col>
               </Row>
-              <Row className="mb-2">
+              <Row className="mb-2 flex items-center justify-center">
                 <Col xs={4}>Medical:</Col>
-                <Col xs={8} className="pl-4 font-bold">
-                  <Link to={""}>View</Link>
+                <Col xs={8} className="pl-4 font-bold flex flex-row gap-x-4 items-center">
                   <Button
-                    className="flex w-18 h-8 justify-center items-center ml-10"
-                    variant="outline-success"
-                    style={{ fontSize: "small" }}
+                      className="flex w-18 h-8 justify-center items-center"
+                      variant="outline-success"
+                      style={{ fontSize: "small" }}
                   >
                     Add
                   </Button>
+                  <Button variant="link" className="font-bold" style={{ fontSize: "small" }} >View</Button>
                 </Col>
               </Row>
-              <Row className="mb-2">
+              <Row className="mb-2 flex items-center justify-center">
                 <Col xs={4}>Trail:</Col>
-                <Col xs={8} className="pl-4 font-bold">
-                  <Link to={""}>View</Link>
+                <Col xs={8} className="font-bold flex flex-row gap-x-4 items-center" >
                   <Button
-                    className="flex w-18 h-8 justify-center items-center ml-10"
+                    className="flex w-18 h-8 justify-center items-center "
                     variant="outline-success"
                     onClick={(e) => {
-                      setStudentID(studentData?.stdID);
-                      AddTrial();
+                      AddTrial(studentData?.stdID);
                     }}
                     style={{ fontSize: "small" }}
                   >
                     Add
                   </Button>
+                  <Button variant="link" className="font-bold" style={{ fontSize: "small" }}
+                          onClick={(e) => {
+                            viewTrail(studentData?.stdID);
+                          }}>View</Button>
                 </Col>
               </Row>
               <Row className="mb-2">

@@ -3,7 +3,7 @@ import { Card, Form, Row, Col, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { findStudentByID, saveTrailPermit } from "../ApiService/api";
+import { findStudentByID, saveTrailPermit } from "../../ApiService/api";
 import Swal from "sweetalert2";
 
 export default function TrailPermit() {
@@ -12,6 +12,9 @@ export default function TrailPermit() {
   const [studentData, setStudentData] = useState("");
   const [submitButton, setSubmitButton] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
+  const maxDate = new Date();
+  maxDate.setFullYear(maxDate.getFullYear() +1 );
+
 
   const formik = useFormik({
     initialValues: {
@@ -69,7 +72,11 @@ export default function TrailPermit() {
               icon: "error",
               title: "Already Entered This Permit",
             });
-          }
+          }else if(response.data.code === "10"){
+            Swal.fire({
+            icon: "error",
+            title: "Current permit not Expired",
+          });}
         } catch (error) {
           console.error("Error while saving student details:", error);
           Swal.fire({
@@ -178,6 +185,8 @@ export default function TrailPermit() {
                     type="Date"
                     {...formik.getFieldProps("examDate")}
                     required
+                    min={new Date().toISOString().split('T')[0]}
+                    max={maxDate.toISOString().split('T')[0]}
                   />
                   <Form.Text className="text-danger">
                     {formik.touched.examDate && formik.errors.examDate}
@@ -195,6 +204,8 @@ export default function TrailPermit() {
                     placeholder=""
                     required
                     {...formik.getFieldProps("expDate")}
+                    min={new Date().toISOString().split('T')[0]}
+                    max={maxDate.toISOString().split('T')[0]}
                     onSelect={() => {
                       formik.setFieldValue("b1M", false);
                     }}

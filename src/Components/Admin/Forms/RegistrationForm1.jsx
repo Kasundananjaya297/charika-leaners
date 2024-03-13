@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import { useFormik } from "formik";
-import { SaveStudent } from "../ApiService/api";
+import { SaveStudent } from "../../ApiService/api";
 import Swal from "sweetalert2";
 import {
   validateName,
@@ -14,7 +14,7 @@ import {
   validateTelephone,
   validateNIC,
   ValidateNonRequiredName,
-} from "../Validation/validation";
+} from "../../Validation/validation";
 import * as Yup from "yup";
 export default function RegistrationForm1() {
   const nav = useNavigate();
